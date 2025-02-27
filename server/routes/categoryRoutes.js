@@ -1,3 +1,4 @@
+//Tested and successful on postman
 const express = require("express");
 const { 
     createCategory, 

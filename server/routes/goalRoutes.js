@@ -1,3 +1,4 @@
+//Tested and successful on postman
 const express = require("express");
 const { createGoal, getUserGoals, updateGoal, deleteGoal } = require("../controllers/goalController");
 const { verifyToken, verifyRole } = require("../middleware/authMiddleware");
