@@ -5,6 +5,7 @@ const {
     getSingleBudget,
     updateBudget,
     deleteBudget,
+    checkBudgetAlerts 
 } = require("../controllers/budgetController");
 const { verifyToken, verifyRole } = require("./../middleware/authMiddleware");
 
@@ -25,5 +26,7 @@ router.put("/updateBudget/:id", verifyToken, updateBudget);
 // http://localhost:8080/budget/deleteBudget/:id
 router.delete("/deleteBudget/:id", verifyToken, deleteBudget);
 
+// http://localhost:8080/budget/alerts/check
+router.get("/alerts/check", verifyToken, checkBudgetAlerts);
 
 module.exports = router;

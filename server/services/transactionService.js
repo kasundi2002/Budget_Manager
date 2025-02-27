@@ -1,5 +1,5 @@
-import Transaction from "./../models/TransactionSchema.js";
-import Notification from "./../models/notificationSchema.js";
+const Transaction = require ("./../models/TransactionSchema.js");
+const Notification = require ("./../models/notificationSchema.js");
 
 class TransactionService {
     async createTransaction(transactionData) {
@@ -60,4 +60,4 @@ class TransactionService {
     }
 }
 
-export default new TransactionService();
+module.exports = new TransactionService();

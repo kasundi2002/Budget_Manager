@@ -1,4 +1,4 @@
-import Transaction from "./../models/TransactionSchema";
+const Transaction = require ("./../models/TransactionSchema");
 
 class ReportService {
     async generateReport(userId, period) {
@@ -17,4 +17,5 @@ class ReportService {
     }
 }
 
-export default new ReportService();
+module.exports = new ReportService();
+

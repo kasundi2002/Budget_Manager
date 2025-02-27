@@ -1,63 +1,59 @@
-const Budget = require("./../models/BudgetSchema");
+const budgetService = require("./../services/budgetService.js");
+const { successResponse, errorResponse } = require("./../utils/responseHandler.js");
 
-// ✅ Create a budget
 const createBudget = async (req, res) => {
     try {
-        const budget = await Budget.create({ user: req.user.id, ...req.body });
-        res.status(201).json(budget);
+        const budget = await budgetService.createBudget(req.user.id, req.body);
+        return successResponse(res, "Budget created successfully", budget);
     } catch (error) {
-        res.status(400).json({ message: error.message });
+        return errorResponse(res, error.message, 400);
     }
 };
 
-// ✅ Get budgets with category names
 const getUserBudgets = async (req, res) => {
     try {
-        const budgets = await Budget.find({ user: req.user.id }).populate("category", "name type");
-        res.status(200).json(budgets);
+        const budgets = await budgetService.getUserBudgets(req.user.id);
+        return successResponse(res, "Budgets retrieved successfully", budgets);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return errorResponse(res, error.message, 500);
     }
 };
 
-// ✅ Get a single budget by ID
 const getSingleBudget = async (req, res) => {
     try {
-        const budget = await Budget.findOne({ _id: req.params.id, user: req.user.id });
-        if (!budget) return res.status(404).json({ message: "Budget not found" });
-        res.status(200).json(budget);
+        const budget = await budgetService.getSingleBudget(req.params.id, req.user.id);
+        return successResponse(res, "Budget retrieved successfully", budget);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return errorResponse(res, error.message, 500);
     }
 };
 
-// ✅ Update a budget
 const updateBudget = async (req, res) => {
     try {
-        const updatedBudget = await Budget.findOneAndUpdate(
-            { _id: req.params.id, user: req.user.id },
-            req.body,
-            { new: true }
-        );
-        if (!updatedBudget) return res.status(404).json({ message: "Budget not found" });
-        res.status(200).json(updatedBudget);
+        const updatedBudget = await budgetService.updateBudget(req.params.id, req.user.id, req.body);
+        return successResponse(res, "Budget updated successfully", updatedBudget);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return errorResponse(res, error.message, 500);
     }
 };
 
-// ✅ Delete a budget
 const deleteBudget = async (req, res) => {
     try {
-        const budget = await Budget.findOneAndDelete({ _id: req.params.id, user: req.user.id });
-        if (!budget) return res.status(404).json({ message: "Budget not found" });
-        res.status(200).json({ message: "Budget deleted successfully" });
+        await budgetService.deleteBudget(req.params.id, req.user.id);
+        return successResponse(res, "Budget deleted successfully");
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        return errorResponse(res, error.message, 500);
     }
 };
 
-
+const checkBudgetAlerts = async (req, res) => {
+    try {
+        await budgetService.checkBudgetAlerts(req.user.id);
+        return successResponse(res, "Budget alerts checked successfully");
+    } catch (error) {
+        return errorResponse(res, error.message, 500);
+    }
+};
 
 module.exports = {
     createBudget,
@@ -65,4 +61,5 @@ module.exports = {
     getSingleBudget,
     updateBudget,
     deleteBudget,
-};
+    checkBudgetAlerts
+}
