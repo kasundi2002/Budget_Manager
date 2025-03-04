@@ -1,3 +1,4 @@
+// Tested and successful on postman
 const express = require("express");
 const { createOrUpdateCurrency, getCurrencyInfo } = require("../controllers/currencyController");
 const { verifyToken, verifyRole } = require("../middleware/authMiddleware");

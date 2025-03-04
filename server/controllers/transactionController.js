@@ -1,10 +1,18 @@
 const Transaction = require("./../models/TransactionSchema.js");
-const Category = require("./../models/categorySchema.js");
+const NotificationService = require("./../services/notificationService.js");
 
 // ✅ Create a new transaction
 const createTransaction = async (req, res) => {
     try {
         const transaction = await Transaction.create({ user: req.user.id, ...req.body });
+        
+        // ✅ Send a notification when a transaction is created
+        await NotificationService.sendNotification(
+            req.user.id,
+            "Transaction",
+            `New transaction added: ${transaction.amount}`
+        );
+
         res.status(201).json(transaction);
     } catch (error) {
         res.status(400).json({ message: error.message });
@@ -43,6 +51,12 @@ const updateTransaction = async (req, res) => {
         );
 
         if (!updatedTransaction) return res.status(404).json({ message: "Transaction not found" });
+        
+        await NotificationService.sendNotification(
+            req.user.id,
+            "Transaction",
+            `Transaction updated: ${updatedTransaction.amount}`
+        );
 
         res.status(200).json(updatedTransaction);
     } catch (error) {
@@ -55,6 +69,13 @@ const deleteTransaction = async (req, res) => {
     try {
         const transaction = await Transaction.findOneAndDelete({ _id: req.params.id, user: req.user.id });
         if (!transaction) return res.status(404).json({ message: "Transaction not found" });
+        
+        // ✅ Send a notification when a transaction is deleted
+        await NotificationService.sendNotification(
+            req.user.id,
+            "Transaction",
+            `Transaction deleted: ${transaction.amount}`
+        );
 
         res.status(200).json({ message: "Transaction deleted successfully" });
     } catch (error) {

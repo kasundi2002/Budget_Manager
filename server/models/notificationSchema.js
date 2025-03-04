@@ -4,7 +4,7 @@ const notificationSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // The user receiving the notification
     type: { 
         type: String, 
-        enum: ["budget_alert", "recurring_transaction", "spending_pattern", "bill_reminder"], 
+        enum: ["budget_alert", "recurring_transaction", "spending_pattern", "bill_reminder","Transaction","goal_alert"], 
         required: true 
     }, // Type of notification
     message: { type: String, required: true }, // Notification message

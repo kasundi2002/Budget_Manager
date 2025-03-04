@@ -1,8 +1,12 @@
-import budgetService from "./../services/budgetService.js";
-import transactionService from "./../services/transactionService.js";
+const budgetService = require ("./../services/budgetService.js");
+const transactionService = require ("./../services/transactionService.js");
 
-export const checkNotifications = async (req, res, next) => {
+const checkNotifications = async (req, res, next) => {
     await budgetService.checkBudgetAlerts(req.user.id);
     await transactionService.processRecurringTransactions();
     next();
 };
+
+module.exports = {
+    checkNotifications
+}

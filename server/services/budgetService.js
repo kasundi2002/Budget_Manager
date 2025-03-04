@@ -27,31 +27,52 @@ class BudgetService {
         if (!updatedBudget) throw new Error("Budget not found");
         return updatedBudget;
     }
-
+    //when deleting budgetId and userId is not fetched successfully
     async deleteBudget(budgetId, userId) {
-        const budget = await Budget.findOneAndDelete({ _id: budgetId, user: userId });
-        if (!budget) throw new Error("Budget not found");
-        return budget;
-    }
+        console.log(`Inside deleteBudget service. budgetId: ${budgetId}, userId: ${userId}`);
 
-    async checkBudgetAlerts(userId) {
+        if (!budgetId || !userId) {
+            console.log("Invalid budgetId or userId");
+            throw new Error("Invalid budgetId or userId");
+        }
+
+        const budget = await Budget.findOneAndDelete({ _id: budgetId, user: userId });
+
+        if (!budget) {
+            console.log(`Budget not found for user ${userId} with id ${budgetId}`);
+            throw new Error("Budget not found");
+        }
+
+        console.log(`Budget deleted: ${JSON.stringify(budget)}`);
+        return budget;
+    };
+
+    async checkBudgetAlerts(userId){
+    try {
         const budgets = await Budget.find({ user: userId });
 
         for (let budget of budgets) {
             const totalSpent = await Transaction.aggregate([
                 { $match: { user: userId, category: budget.category } },
-                { $group: { _id: null, total: { $sum: "$amount" } } },
+                { $group: { _id: null, total: { $sum: "$amount" } } }
             ]);
 
-            if (totalSpent.length > 0 && totalSpent[0].total >= budget.amount * 0.9) {
-                await Notification.create({
-                    user: userId,
-                    type: "budget_alert",
-                    message: `You have exceeded 90% of your budget for ${budget.category.name}.`,
-                });
+            if (totalSpent.length > 0) {
+                const spent = totalSpent[0].total;
+                const percentageUsed = (spent / budget.amount) * 100;
+
+                if (percentageUsed >= 90) {
+                    await sendNotification(userId, "budget_alert", `You have exceeded 90% of your budget for ${budget.category.name}.`);
+                } else if (percentageUsed >= 75) {
+                    await sendNotification(userId, "budget_alert", `You have used 75% of your budget for ${budget.category.name}. Consider adjusting your spending.`);
+                }
             }
         }
+    } catch (error) {
+        console.error("Error checking budget alerts:", error);
     }
+};
+
 }
 
 module.exports = new BudgetService();

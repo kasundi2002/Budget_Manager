@@ -1,5 +1,6 @@
 const Transaction = require ("./../models/TransactionSchema.js");
 const Notification = require ("./../models/notificationSchema.js");
+const { sendNotification } = require("./notificationService.js");
 
 class TransactionService {
     async createTransaction(transactionData) {
@@ -54,10 +55,11 @@ class TransactionService {
             await Notification.create({
                 user: transaction.user,
                 type: "recurring_transaction",
-                message: `Your recurring transaction for ${transaction.category} of $${transaction.amount} has been processed.`,
+                message: `Your recurring transaction for ${transaction.category} of ${transaction.amount} has been processed.`,
             });
         }
     }
+
 }
 
 module.exports = new TransactionService();

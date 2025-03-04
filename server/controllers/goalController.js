@@ -1,4 +1,5 @@
 const Goal = require("./../models/goalSchema");
+const NotificationService = require("./../services/notificationService.js");
 
 // Create a goal
 const createGoal = async (req, res) => {
@@ -11,6 +12,14 @@ const createGoal = async (req, res) => {
             deadline
         });
         await goal.save();
+
+        // ✅ Send a notification when a transaction is created
+        await NotificationService.sendNotification(
+            req.user.id,
+            "goal_alert",
+            `New Goal added: ${goal.title} with a target amount ${goal.targetAmount} and deadline ${goal.deadline}`
+        );
+
         res.status(201).json(goal);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -39,6 +48,13 @@ const updateGoal = async (req, res) => {
         if (!updatedGoal) {
             return res.status(404).json({ message: "Goal not found" });
         }
+
+        await NotificationService.sendNotification(
+            req.user.id,
+            "goal_alert",
+            `Goal updated: ${updatedGoal.title} with the target amount ${updatedGoal.targetAmount}`
+        );
+
         res.status(200).json(updatedGoal);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -53,6 +69,15 @@ const deleteGoal = async (req, res) => {
         if (!goal) {
             return res.status(404).json({ message: "Goal not found" });
         }
+
+        // ✅ Send a notification when a transaction is deleted
+        await NotificationService.sendNotification(
+            req.user.id,
+            "goal_alert",
+            `Goal deleted: ${goal.title}`
+        );
+
+
         res.status(200).json({ message: "Goal deleted successfully" });
     } catch (error) {
         res.status(500).json({ message: error.message });
