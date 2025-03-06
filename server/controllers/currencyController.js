@@ -1,4 +1,4 @@
-const currencyService = require("./../services/currencyservice.js");
+const currencyService = require("../services/currencyService.js");
 const { successResponse, errorResponse } = require("./../utils/responseHandler.js");
 
 const createOrUpdateCurrency = async (req, res) => {

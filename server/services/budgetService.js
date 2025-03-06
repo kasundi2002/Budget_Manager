@@ -27,25 +27,27 @@ class BudgetService {
         if (!updatedBudget) throw new Error("Budget not found");
         return updatedBudget;
     }
-    //when deleting budgetId and userId is not fetched successfully
-    async deleteBudget(budgetId, userId) {
-        console.log(`Inside deleteBudget service. budgetId: ${budgetId}, userId: ${userId}`);
 
-        if (!budgetId || !userId) {
-            console.log("Invalid budgetId or userId");
-            throw new Error("Invalid budgetId or userId");
+    //when deleting budgetId and userId is not fetched successfully
+    async deleteBudget(budgetId) {
+        console.log(`Inside deleteBudget service. budgetId: ${budgetId}`);
+
+        if (!budgetId) {
+            console.log("Invalid budgetId");
+            throw new Error("Invalid budgetId");
         }
 
-        const budget = await Budget.findOneAndDelete({ _id: budgetId, user: userId });
+        const budget = await Budget.findOneAndDelete({ _id: budgetId});
 
         if (!budget) {
-            console.log(`Budget not found for user ${userId} with id ${budgetId}`);
+            console.log(`Budget not found : ${budgetId}`);
             throw new Error("Budget not found");
         }
 
         console.log(`Budget deleted: ${JSON.stringify(budget)}`);
         return budget;
     };
+
 
     async checkBudgetAlerts(userId){
     try {

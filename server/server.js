@@ -5,6 +5,11 @@ require("dotenv").config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const MONGO_URI = process.env.MONGO_URI;
+
+// Middleware
+app.use(cors());
+app.use(express.json());
 
 //Routes
 const authRoutes = require('./routes/authRoutes');
@@ -18,10 +23,6 @@ const notificationRoutes = require('./routes/notificationRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const scheduledTasks = require("./cronJobs/scheduledTasks.js");
 
-// Middleware
-app.use(cors());
-app.use(express.json());
-
 //Defining Routes
 app.use('/auth', authRoutes);
 app.use('/user', userRoutes);
@@ -33,10 +34,26 @@ app.use('/goal', goalRoutes);
 app.use('/notification', notificationRoutes);
 app.use('/report', reportRoutes);
 
-// Start Server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+// Function to connect to MongoDB
+const connectDB = async () => {
+    try {
+        await mongoose.connect(MONGO_URI);
+        console.log("MongoDB Connected");
 
-//Connect to DB
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB connected"))
-.catch((err) => console.log(err));
+        //Start the server only after DB connection is successful
+        app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    } catch (error) {
+        console.error("MongoDB Connection Error:", error);
+        process.exit(1); // Stop the server if DB connection fails
+    }
+};
+
+//Connect to DB and start the server (only in non-test environments)
+// Start the server in non-test environments
+let server;
+if (process.env.NODE_ENV !== "test") {
+    server = connectDB(); // Only run this in non-test environments
+}
+
+module.exports = { app, server };; //Export app for Jest testing
+

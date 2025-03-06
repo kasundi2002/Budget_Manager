@@ -6,7 +6,7 @@ const createBudget = async (req, res) => {
     try {
         const budget = await budgetService.createBudget(req.user.id, req.body);
 
-        // ✅ Send a notification when a budget is created
+        //Send a notification when a budget is created
         await NotificationService.sendNotification(
             req.user.id,
             "budget_alert",
@@ -56,11 +56,13 @@ const updateBudget = async (req, res) => {
 const deleteBudget = async (req, res) => {
     try {
         console.log(`Inside delete budget`);
+
         const id = req.params.id;
         const user = req.user.id;
+
         console.log(`Attempting to delete budget of user ${user} with budget id ${id}`);
 
-        const budget = await budgetService.deleteBudget(id, user);
+        const budget = await budgetService.deleteBudget(id);
 
         if (!budget) {
             console.log("Budget not found"); // Debugging log

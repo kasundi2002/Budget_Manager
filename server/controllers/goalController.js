@@ -4,11 +4,12 @@ const NotificationService = require("./../services/notificationService.js");
 // Create a goal
 const createGoal = async (req, res) => {
     try {
-        const { title, targetAmount, deadline } = req.body;
+        const { title, targetAmount, currency, deadline } = req.body;
         const goal = new Goal({
             user: req.user._id,
             title,
             targetAmount,
+            currency,
             deadline
         });
         await goal.save();
@@ -20,7 +21,7 @@ const createGoal = async (req, res) => {
             `New Goal added: ${goal.title} with a target amount ${goal.targetAmount} and deadline ${goal.deadline}`
         );
 
-        res.status(201).json(goal);
+        res.status(201).json({ success: true, data: goal , _id: goal._id });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -30,7 +31,7 @@ const createGoal = async (req, res) => {
 const getUserGoals = async (req, res) => {
     try {
         const goals = await Goal.find({ user: req.user._id });
-        res.status(200).json(goals);
+        res.status(200).json({ data: goals });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -84,9 +85,26 @@ const deleteGoal = async (req, res) => {
     }
 };
 
+// Get a single goal for the user by goalId
+const getSingleUserGoal = async (req, res) => {
+    try {
+        const { goalId } = req.params; // Get goalId from the request parameters
+        const goal = await Goal.findOne({ _id: goalId}); // Find the goal by user and goalId
+
+        if (!goal) {
+            return res.status(404).json({ message: "Goal not found" });
+        }
+
+        res.status(200).json(goal); // Send the goal data in the response
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     createGoal,
     getUserGoals,
     updateGoal,
-    deleteGoal
+    deleteGoal,
+    getSingleUserGoal
 };

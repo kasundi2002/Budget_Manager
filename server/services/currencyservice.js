@@ -1,7 +1,7 @@
 const axios = require("axios");
-const Currency = require("./../models/currencySchema");
+const Currency = require("../models/currencySchema");
 
-// 📌 When Do We Use Axios in the Backend?
+// When Do We Use Axios in the Backend?
 // ✔ Calling External APIs (e.g., fetching exchange rates, payment gateways)
 // ✔ Making HTTP Requests from the Server (e.g., fetching financial data)
 
@@ -44,7 +44,16 @@ class CurrencyService {
 
         return currency;
     }
+
+    async convertAmount(amount, fromCurrency, toCurrency) {
+        if (fromCurrency === toCurrency) return amount; // No conversion needed
+
+        const rates = await this.fetchExchangeRates(fromCurrency);
+        const exchangeRate = rates[toCurrency];
+
+        if (!exchangeRate) throw new Error("Invalid currency conversion");
+        return amount * exchangeRate;
+    }
 }
 
 module.exports = new CurrencyService();
-
