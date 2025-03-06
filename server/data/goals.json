@@ -1,0 +1,50 @@
+[
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "title": "Save for a Car",
+        "targetAmount": 10000,
+        "savedAmount": 2500,
+        "currency": "USD",
+        "deadline": "2025-12-31"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "title": "Vacation Fund",
+        "targetAmount": 3000,
+        "savedAmount": 500,
+        "currency": "USD",
+        "deadline": "2024-08-30"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "title": "Save for a Car",
+        "targetAmount": 10000,
+        "savedAmount": 2500,
+        "currency": "USD",
+        "deadline": "2025-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "title": "Vacation Fund",
+        "targetAmount": 3000,
+        "savedAmount": 500,
+        "currency": "USD",
+        "deadline": "2024-08-30"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "title": "Emergency Fund",
+        "targetAmount": 5000,
+        "savedAmount": 1000,
+        "currency": "USD",
+        "deadline": "2024-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "title": "Home Renovation",
+        "targetAmount": 8000,
+        "savedAmount": 1500,
+        "currency": "USD",
+        "deadline": "2025-06-30"
+    }
+]

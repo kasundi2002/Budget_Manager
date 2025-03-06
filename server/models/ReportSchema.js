@@ -2,9 +2,13 @@ const mongoose = require("mongoose");
 
 const reportSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-    transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Transaction" }],
-    period: { type: String, enum: ["daily", "weekly", "monthly", "yearly"], required: true },
-    summary: { type: String }
+    type: { type: String, enum: ["spending_trend", "income_vs_expenses"], required: true },
+    startDate: { type: Date, required: true },
+    endDate: { type: Date, required: true },
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" }, // Optional category filter
+    tags: [{ type: String }], // Optional tag filters
+    data: { type: Object, required: true }, // Stores report data (totals, trends, etc.)
+    createdAt: { type: Date, default: Date.now }
 });
 
 module.exports = mongoose.model("Report", reportSchema);

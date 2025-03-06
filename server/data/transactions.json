@@ -1,0 +1,211 @@
+[
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "income",
+        "category": "665c1f8b2b9d3a0012f3b001",
+        "amount": 5000,
+        "currency": "USD",
+        "tags": ["work", "monthly"],
+        "date": "2024-01-01",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "income",
+        "category": "665c1f8b2b9d3a0012f3b002",
+        "amount": 800,
+        "currency": "USD",
+        "tags": ["side-income", "work"],
+        "date": "2024-02-15"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b004",
+        "amount": 1200,
+        "currency": "USD",
+        "tags": ["housing"],
+        "date": "2024-01-05",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b005",
+        "amount": 300,
+        "currency": "USD",
+        "tags": ["food", "essentials"],
+        "date": "2024-01-10"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b005",
+        "amount": 250,
+        "currency": "USD",
+        "tags": ["food", "essentials"],
+        "date": "2024-02-10"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b006",
+        "amount": 150,
+        "currency": "USD",
+        "tags": ["commute", "bus"],
+        "date": "2024-01-15"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b007",
+        "amount": 100,
+        "currency": "USD",
+        "tags": ["movies", "fun"],
+        "date": "2024-01-20"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b007",
+        "amount": 90,
+        "currency": "USD",
+        "tags": ["gaming", "fun"],
+        "date": "2024-02-18"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b008",
+        "amount": 200,
+        "currency": "USD",
+        "tags": ["electricity", "water"],
+        "date": "2024-01-25",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b010",
+        "amount": 15,
+        "currency": "USD",
+        "tags": ["Netflix", "665c1f8b2b9d3a0012f3b007"],
+        "date": "2024-01-28",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b010",
+        "amount": 10,
+        "currency": "USD",
+        "tags": ["Spotify", "music"],
+        "date": "2024-01-30",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b009",
+        "amount": 250,
+        "currency": "USD",
+        "tags": ["doctor", "medical"],
+        "date": "2024-02-05"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "income",
+        "category": "665c1f8b2b9d3a0012f3b001",
+        "amount": 5000,
+        "currency": "USD",
+        "tags": ["work", "monthly"],
+        "date": "2024-01-01",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b004",
+        "amount": 1200,
+        "currency": "USD",
+        "tags": ["housing"],
+        "date": "2024-01-05",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b005",
+        "amount": 300,
+        "currency": "USD",
+        "tags": ["food", "essentials"],
+        "date": "2024-01-10"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b006",
+        "amount": 150,
+        "currency": "USD",
+        "tags": ["commute", "bus"],
+        "date": "2024-01-15"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b007",
+        "amount": 100,
+        "currency": "USD",
+        "tags": ["movies", "fun"],
+        "date": "2024-01-20"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b008",
+        "amount": 200,
+        "currency": "USD",
+        "tags": ["electricity", "water"],
+        "date": "2024-01-25",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b010",
+        "amount": 15,
+        "currency": "USD",
+        "tags": ["Netflix", "665c1f8b2b9d3a0012f3b007"],
+        "date": "2024-01-28",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b010",
+        "amount": 10,
+        "currency": "USD",
+        "tags": ["Spotify", "music"],
+        "date": "2024-01-30",
+        "recurring": { "frequency": "monthly", "endDate": "2024-12-31" }
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "income",
+        "category": "665c1f8b2b9d3a0012f3b002",
+        "amount": 800,
+        "currency": "USD",
+        "tags": ["side-income", "work"],
+        "date": "2024-02-15"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "type": "expense",
+        "category": "665c1f8b2b9d3a0012f3b005",
+        "amount": 250,
+        "currency": "USD",
+        "tags": ["food", "essentials"],
+        "date": "2024-02-10"
+    }
+
+]

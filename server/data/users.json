@@ -1,0 +1,29 @@
+[
+    {
+        "_id": "664b2f7c5b1d4c0012e3a123",
+        "name": "Name User",
+        "email": "userDataFile@example.com",
+        "password": "$2b$10$abcdef1234567890abcdef1234567890abcdef1234567890", 
+        "role": "user",
+        "baseCurrency": "USD",
+        "createdAt": "2024-01-01T10:00:00Z"
+    },
+    {
+        "_id": "664b2f7c5b1d4c0012e3a124",
+        "name": "Admin User",
+        "email": "adminDataFile@example.com",
+        "password": "$2b$10$abcdef1234567890abcdef1234567890abcdef1234567890", 
+        "role": "admin",
+        "baseCurrency": "USD",
+        "createdAt": "2024-01-01T10:00:00Z"
+    },
+    {
+        "_id": "67c9a3036e4b83b9a3d383f1",
+        "name": "sahan",
+        "email": "sahan@gmail.com",
+        "password": "$2b$10$abcdef1234567890abcdef1234567c9a3036e4b83b9a3d3f1", 
+        "role": "user",
+        "baseCurrency": "USD",
+        "createdAt": "2024-01-01T10:00:00Z"
+    }
+]

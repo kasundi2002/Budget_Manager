@@ -1,14 +1,18 @@
 const Report = require("./../models/ReportSchema");
+const ReportService = require("./../services/reportService");
 
 // Generate a report
 const createReport = async (req, res) => {
     try {
-        const { period, summary, transactions } = req.body;
+        const { type, startDate, endDate, category, tags, data } = req.body;
         const report = new Report({
             user: req.user._id,
-            period,
-            summary,
-            transactions
+            type,
+            startDate,
+            endDate,
+            category,
+            tags,
+            data
         });
         await report.save();
         res.status(201).json(report);
@@ -41,8 +45,41 @@ const getReport = async (req, res) => {
     }
 };
 
+const generateSpendingTrend = async (req, res) => {
+    try {
+        const { startDate, endDate, category, tags } = req.body;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        
+        const report = await ReportService.generateSpendingTrend(req.user.id, start, end, category, tags);
+        res.status(201).json(report);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+    const generateIncomeExpense = async (req, res) => {
+        try {
+            const { startDate, endDate } = req.body;
+            console.log(`Generating Income vs Expense report for user ${req.user.id} from ${startDate} to ${endDate}`);
+
+            const start = new Date(startDate);
+            const end = new Date(endDate);
+
+            const report = await ReportService.generateIncomeVsExpense(req.user.id, start, end);
+
+            res.status(201).json(report);
+        } catch (error) {
+            console.error("Error in generateIncomeExpense:", error);
+            res.status(500).json({ message: error.message });
+        }
+    };
+
+
 module.exports = {
     createReport,
     getUserReports,
-    getReport
+    getReport,
+    generateSpendingTrend,
+    generateIncomeExpense
 };

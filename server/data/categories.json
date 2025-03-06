@@ -1,0 +1,12 @@
+[
+    { "_id": "665c1f8b2b9d3a0012f3b001", "name": "Salary", "type": "income" },
+    { "_id": "665c1f8b2b9d3a0012f3b002", "name": "Freelance", "type": "income" },
+    { "_id": "665c1f8b2b9d3a0012f3b003", "name": "Investments", "type": "income" },
+    { "_id": "665c1f8b2b9d3a0012f3b004", "name": "Rent", "type": "expense" },
+    { "_id": "665c1f8b2b9d3a0012f3b005", "name": "Groceries", "type": "expense" },
+    { "_id": "665c1f8b2b9d3a0012f3b006", "name": "Transportation", "type": "expense" },
+    { "_id": "665c1f8b2b9d3a0012f3b007", "name": "Entertainment", "type": "expense" },
+    { "_id": "665c1f8b2b9d3a0012f3b008", "name": "Utilities", "type": "expense" },
+    { "_id": "665c1f8b2b9d3a0012f3b009", "name": "Healthcare", "type": "expense" },
+    { "_id": "665c1f8b2b9d3a0012f3b010", "name": "Subscription", "type": "expense" }
+]

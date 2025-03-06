@@ -1,0 +1,67 @@
+[
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "category": "665c1f8b2b9d3a0012f3b005",
+        "amount": 500,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "category": "665c1f8b2b9d3a0012f3b007",
+        "amount": 200,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "664b2f7c5b1d4c0012e3a123",
+        "category": "665c1f8b2b9d3a0012f3b006",
+        "amount": 300,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "category": "665c1f8b2b9d3a0012f3b005",
+        "amount": 500,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "category": "665c1f8b2b9d3a0012f3b007",
+        "amount": 200,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "category": "665c1f8b2b9d3a0012f3b006",
+        "amount": 300,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "category": "665c1f8b2b9d3a0012f3b004",
+        "amount": 1200,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    },
+    {
+        "user": "67c9a3036e4b83b9a3d383f1",
+        "category": "665c1f8b2b9d3a0012f3b010",
+        "amount": 25,
+        "currency": "USD",
+        "startDate": "2024-01-01",
+        "endDate": "2024-12-31"
+    }
+
+]
