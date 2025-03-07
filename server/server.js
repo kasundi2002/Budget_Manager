@@ -22,6 +22,7 @@ const goalRoutes = require('./routes/goalRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
 const reportRoutes = require('./routes/reportRoutes');
 const scheduledTasks = require("./cronJobs/scheduledTasks.js");
+const dashboardRoutes = require("./routes/dashboardRoutes.js");
 
 //Defining Routes
 app.use('/auth', authRoutes);
@@ -33,6 +34,7 @@ app.use('/currency', currencyRoutes);
 app.use('/goal', goalRoutes);
 app.use('/notification', notificationRoutes);
 app.use('/report', reportRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 // Function to connect to MongoDB
 const connectDB = async () => {

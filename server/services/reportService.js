@@ -4,18 +4,34 @@ const Report = require("./../models/ReportSchema");
 class ReportService {
     // ✅ Generate spending trends over time
     async generateSpendingTrend(userId, startDate, endDate, category, tags) {
+        console.log(`Inside report service: generate spending trend:userId is ${userId}`);
+        
         let query = { user: userId, type: "expense", date: { $gte: startDate, $lte: endDate } };
 
+        console.log("User ID:", userId);
+        console.log("Category:", category);
+        console.log("Tags:", tags);
+        console.log("Query:", query);
+        
         if (category) query.category = category;
         if (tags && tags.length) query.tags = { $in: tags };
 
+        console.log("Generated query:", query);
+
         const transactions = await Transaction.find(query);
+        console.log("Transactions fetched:", transactions);
+
+        if (transactions.length === 0) {
+            console.log("No transactions found for the given filters.");
+        }
 
         let trends = {};
         transactions.forEach(tx => {
             const month = tx.date.toISOString().substring(0, 7); // Get YYYY-MM format
             trends[month] = (trends[month] || 0) + tx.amount;
         });
+
+        console.log("Trends generated:", trends);
 
         return await Report.create({
             user: userId,

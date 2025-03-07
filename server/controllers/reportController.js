@@ -24,7 +24,12 @@ const createReport = async (req, res) => {
 // Get reports for a user
 const getUserReports = async (req, res) => {
     try {
+        console.log(`Inside report Controller: getUserReports: userId: ${req.user._id}`);
+
         const reports = await Report.find({ user: req.user._id });
+
+        console.log(reports);
+        
         res.status(200).json(reports);
     } catch (error) {
         res.status(500).json({ message: error.message });
@@ -46,13 +51,17 @@ const getReport = async (req, res) => {
 };
 
 const generateSpendingTrend = async (req, res) => {
+    console.log(`Inside report controller: generate spending trend`);
     try {
         const { startDate, endDate, category, tags } = req.body;
         const start = new Date(startDate);
         const end = new Date(endDate);
         
         const report = await ReportService.generateSpendingTrend(req.user.id, start, end, category, tags);
+        console.log(`response in generating spending pattern: ${report}`);
         res.status(201).json(report);
+
+        
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -67,7 +76,6 @@ const generateSpendingTrend = async (req, res) => {
             const end = new Date(endDate);
 
             const report = await ReportService.generateIncomeVsExpense(req.user.id, start, end);
-
             res.status(201).json(report);
         } catch (error) {
             console.error("Error in generateIncomeExpense:", error);
