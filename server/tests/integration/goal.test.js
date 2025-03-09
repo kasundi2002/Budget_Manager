@@ -2,9 +2,9 @@
 //tested using npx jest tests/goal.test.js --detectOpenHandles and working
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { app } = require("../server"); 
-const server = require("../server"); 
-const cronJob = require("../cronJobs/scheduledTasks"); 
+const { app } = require("../../server"); 
+const server = require("../../server"); 
+const cronJob = require("../../cronJobs/scheduledTasks"); 
 
 let token = "";
 let testUserId = "";

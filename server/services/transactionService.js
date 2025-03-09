@@ -2,6 +2,8 @@ const Transaction = require("../models/TransactionSchema");
 const Currency = require("../models/currencySchema");
 const CurrencyService = require("./currencyService");
 const Notification = require("../models/notificationSchema");
+const Goal = require("./../models/goalSchema");
+const goalService = require("./../services/goalService");
 
 class TransactionService {
     // ✅ Create a transaction with currency conversion
@@ -24,6 +26,13 @@ class TransactionService {
             amount: convertedAmount,
             currency: userCurrency.baseCurrency
         });
+
+        await this.updateAvailableBalance(userId);
+        
+        // ✅ Auto allocate if it's an income
+        if (transaction.type === "income" && transaction.autoAllocate === "true") {
+            await goalService.autoAllocateToGoals(userId, transaction.amount);
+        }
 
         await Notification.create({
             user: userId,
@@ -125,6 +134,26 @@ class TransactionService {
                 message: `Recurring transaction for ${transaction.category} processed: ${transaction.amount} ${transaction.currency}`
             });
         }
+    }
+
+    async updateAvailableBalance(userId) {
+    const totalIncome = await Transaction.aggregate([
+        { $match: { user: userId, type: "income" } },
+        { $group: { _id: null, total: { $sum: "$amount" } } }
+    ]);
+
+    const totalExpenses = await Transaction.aggregate([
+        { $match: { user: userId, type: "expense" } },
+        { $group: { _id: null, total: { $sum: "$amount" } } }
+    ]);
+
+    const allocatedAmount = await Goal.aggregate([
+        { $match: { user: userId, autoAllocate: true } },
+        { $group: { _id: null, total: { $sum: "$savedAmount" } } }
+    ]);
+
+    const availableBalance = (totalIncome[0]?.total || 0) - (totalExpenses[0]?.total || 0) - (allocatedAmount[0]?.total || 0);
+    return availableBalance;
     }
 }
 

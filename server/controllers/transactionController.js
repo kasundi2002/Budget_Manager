@@ -4,7 +4,7 @@ const TransactionService = require("../services/transactionService");
 // ✅ Create a new transaction
 const createTransaction = async (req, res) => {
     try {
-        const { type, amount, category, tags, date, recurring, currency } = req.body;
+        const { type, amount, category, tags, date, recurring, currency , autoAllocate } = req.body;
         const userId = req.user.id;
 
         // ✅ Store transaction using the service
@@ -16,6 +16,7 @@ const createTransaction = async (req, res) => {
             tags,
             date,
             recurring,
+            autoAllocate
         });
 
         res.status(201).json(transaction);

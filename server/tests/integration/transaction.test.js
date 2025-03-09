@@ -2,9 +2,9 @@
 
 const request = require("supertest");
 const mongoose = require("mongoose");
-const { app } = require("../server"); 
-const server = require("../server"); 
-const cronJob = require("../cronJobs/scheduledTasks"); 
+const { app } = require("../../server"); 
+const server = require("../../server"); 
+const cronJob = require("../../cronJobs/scheduledTasks"); 
 
 jest.setTimeout(20000);  
 

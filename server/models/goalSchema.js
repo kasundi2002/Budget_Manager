@@ -6,8 +6,9 @@ const goalSchema = new mongoose.Schema({
     targetAmount: { type: Number, required: true },
     savedAmount: { type: Number, default: 0 },
     currency: { type: String, required: true, default: "USD" }, 
-    deadline: { type: Date, required: true }
+    deadline: { type: Date, required: true },
+    autoAllocate: { type: Boolean, default: false }, // Enables or disables auto allocation
+    allocationPercentage: { type: Number, min: 1, max: 100, default: 10 } // Percentage of income allocated
 });
 
 module.exports = mongoose.model("Goal", goalSchema);
-

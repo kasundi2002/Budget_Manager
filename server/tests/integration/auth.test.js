@@ -1,9 +1,9 @@
 //tested using npx jest tests/auth.test.js --detectOpenHandles and working
 const request = require("supertest");
 const mongoose = require("mongoose");
-const {app} = require("../server"); 
-const server = require("../server"); 
-const cronJob = require("../cronJobs/scheduledTasks"); 
+const {app} = require("../../server"); 
+const server = require("../../server"); 
+const cronJob = require("../../cronJobs/scheduledTasks"); 
 
 // Mock bcrypt's compare method for password comparison
 jest.mock('bcrypt', () => ({

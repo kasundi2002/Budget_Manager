@@ -18,4 +18,26 @@ const checkUpcomingGoals = async () => {
     }
 };
 
-module.exports = { checkUpcomingGoals };
+// ✅ Automatically allocate savings from income transactions
+const autoAllocateToGoals = async (userId, incomeAmount) => {
+    try {
+        const goals = await Goal.find({ user: userId, autoAllocate: true });
+
+        for (let goal of goals) {
+            const allocatedAmount = (incomeAmount * goal.allocationPercentage) / 100;
+
+            if (goal.savedAmount + allocatedAmount > goal.targetAmount) {
+                goal.savedAmount = goal.targetAmount;
+            } else {
+                goal.savedAmount += allocatedAmount;
+            }
+
+            await goal.save();
+            await sendNotification(userId, "goal_update", `Auto-allocated ${allocatedAmount} to goal "${goal.title}".`);
+        }
+    } catch (error) {
+        console.error("Error allocating savings:", error);
+    }
+};
+
+module.exports = { checkUpcomingGoals , autoAllocateToGoals };

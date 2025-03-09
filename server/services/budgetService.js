@@ -1,6 +1,6 @@
 const Budget = require("./../models/BudgetSchema.js");
 const Transaction = require ("./../models/TransactionSchema.js");
-const Notification = require ("./../models/notificationSchema.js");
+const { sendNotification } = require("./notificationService.js");
 
 class BudgetService {
     async createBudget(userId, budgetData) {
@@ -67,9 +67,13 @@ class BudgetService {
                     await sendNotification(userId, "budget_alert", `You have exceeded 90% of your budget for ${budget.category.name}.`);
                 } else if (percentageUsed >= 75) {
                     await sendNotification(userId, "budget_alert", `You have used 75% of your budget for ${budget.category.name}. Consider adjusting your spending.`);
+                }else if (percentageUsed == 100) {
+                    await sendNotification(userId, "budget_alert", `You have completed 100% of your budget for ${budget.category.name}.Consider stopping spending on this category`);
+                }else if (percentageUsed >= 100){
+                    await sendNotification(userId, "budget_alert", `You have exceeded 100% of your budget for ${budget.category.name}.Consider stopping spending on this category`);
                 }
             }
-        }
+         }
     } catch (error) {
         console.error("Error checking budget alerts:", error);
     }

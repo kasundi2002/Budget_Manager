@@ -1,9 +1,9 @@
 //Tests Admin Access to User List
 
 const request = require("supertest");
-const { app, server } = require("../server");
+const { app, server } = require("../../server");
 const mongoose = require("mongoose");
-const cronJob = require("../cronJobs/scheduledTasks"); 
+const cronJob = require("../../cronJobs/scheduledTasks"); 
 
 jest.setTimeout(20000); 
 

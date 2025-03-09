@@ -4,13 +4,15 @@ const NotificationService = require("./../services/notificationService.js");
 // Create a goal
 const createGoal = async (req, res) => {
     try {
-        const { title, targetAmount, currency, deadline } = req.body;
+        const { title, targetAmount, currency, deadline, autoAllocate, allocationPercentage } = req.body;
         const goal = new Goal({
             user: req.user._id,
             title,
             targetAmount,
             currency,
-            deadline
+            deadline,
+            autoAllocate,
+            allocationPercentage
         });
         await goal.save();
 
@@ -18,7 +20,7 @@ const createGoal = async (req, res) => {
         await NotificationService.sendNotification(
             req.user.id,
             "goal_alert",
-            `New Goal added: ${goal.title} with a target amount ${goal.targetAmount} and deadline ${goal.deadline}`
+            `New Goal added: ${goal.title} with a target amount ${goal.targetAmount} ${goal.currency} deadline : ${goal.deadline} autoAllocate : ${goal.autoAllocate} allocationPercentage : ${allocationPercentage}`
         );
 
         res.status(201).json({ success: true, data: goal , _id: goal._id });
@@ -79,7 +81,7 @@ const deleteGoal = async (req, res) => {
         );
 
 
-        res.status(200).json({ message: "Goal deleted successfully" });
+        res.status(200).json({ message: "Goal deleted successfully",success: true, _id: goal._id });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -101,10 +103,22 @@ const getSingleUserGoal = async (req, res) => {
     }
 };
 
+// Automatically allocate savings when income is added
+const allocateSavings = async (req, res) => {
+    try {
+        const { incomeAmount } = req.body;
+        await goalService.allocateSavings(req.user.id, incomeAmount);
+        return successResponse(res, "Savings allocated successfully");
+    } catch (error) {
+        return errorResponse(res, error.message, 500);
+    }
+};
+
 module.exports = {
     createGoal,
     getUserGoals,
     updateGoal,
     deleteGoal,
-    getSingleUserGoal
+    getSingleUserGoal,
+    allocateSavings
 };
