@@ -1,0 +1,147 @@
+{
+  "config": {
+    "target": "http://localhost:8080",
+    "phases": [
+      { "duration": 60, "arrivalRate": 5 },  
+
+      { "duration": 30, "arrivalRate": 10 }, 
+
+      { "duration": 15, "arrivalRate": 20 }  
+
+    ],
+    "defaults": {
+      "headers": {
+        "Content-Type": "application/json"
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "name": "🔹 User Authentication",
+      "flow": [
+        {
+          "post": {
+            "url": "/auth/register",
+            "json": {
+              "username": "testuser",
+              "email": "testuser@example.com",
+              "password": "Password123!"
+            }
+          }
+        },
+        {
+          "post": {
+            "url": "/auth/login",
+            "json": {
+              "email": "testuser@example.com",
+              "password": "Password123!"
+            },
+            "capture": { "json": "$.token", "as": "authToken" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔹 Create & Retrieve Goals",
+      "flow": [
+        {
+          "post": {
+            "url": "/goal/addGoal",
+            "headers": { "Authorization": "Bearer {{ authToken }}" },
+            "json": {
+              "title": "New Laptop",
+              "targetAmount": 2000,
+              "savedAmount": 500,
+              "currency": "USD",
+              "deadline": "2025-12-31",
+              "autoAllocate": true,
+              "allocationPercentage": 15
+            }
+          }
+        },
+        {
+          "get": {
+            "url": "/goal/getGoals",
+            "headers": { "Authorization": "Bearer {{ authToken }}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔹 Add & Check Transactions",
+      "flow": [
+        {
+          "post": {
+            "url": "/transaction/addTransaction",
+            "headers": { "Authorization": "Bearer {{ authToken }}" },
+            "json": {
+              "type": "income",
+              "category": "salary",
+              "amount": 3000,
+              "currency": "USD",
+              "tags": ["work", "monthly"],
+              "date": "2025-02-01",
+              "autoAllocate": true
+            }
+          }
+        },
+        {
+          "post": {
+            "url": "/transaction/addTransaction",
+            "headers": { "Authorization": "Bearer {{ authToken }}" },
+            "json": {
+              "type": "expense",
+              "category": "rent",
+              "amount": 1200,
+              "currency": "USD",
+              "tags": ["apartment", "monthly"],
+              "date": "2025-02-05"
+            }
+          }
+        },
+        {
+          "get": {
+            "url": "/transaction/getUserT/67c9da1bca9edfd194fc28d6",
+            "headers": { "Authorization": "Bearer {{ authToken }}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔹 Budget Alerts & Recommendations",
+      "flow": [
+        {
+          "post": {
+            "url": "/budget/addBudget",
+            "headers": { "Authorization": "Bearer {{ authToken }}" },
+            "json": {
+              "category": "food",
+              "amount": 500,
+              "currency": "USD",
+              "startDate": "2025-02-01",
+              "endDate": "2025-02-28",
+              "alerts": true
+            }
+          }
+        },
+        {
+          "get": {
+            "url": "/budget/alerts/check",
+            "headers": { "Authorization": "Bearer {{ authToken }}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🔹 Notification System",
+      "flow": [
+        {
+          "get": {
+            "url": "/notifications/getUserNotifications",
+            "headers": { "Authorization": "Bearer {{ authToken }}" }
+          }
+        }
+      ]
+    }
+  ]
+}

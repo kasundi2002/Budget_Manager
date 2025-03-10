@@ -13,10 +13,54 @@
         https://github.com/SE1020-IT2070-OOP-DSA-25/project-it22221582.git
 
 2. Install dependencies:
+        
+        npm install express mongoose dotenv cors helmet bcryptjs jsonwebtoken express-rate-limit morgan multer nodemon uuid
 
-3. Set up the environment variables in `.env`:
+        - Express & Middleware 
+                express → Web framework
+                cors → Cross-origin requests
+                helmet → Security headers
+                express-rate-limit → API rate limiting
+                morgan → Request logging
+                multer → File uploads
+                uuid → Generate unique IDs
 
-4. Start the server:
+        - MongoDB & Mongoose
+                mongoose → MongoDB ORM
+                dotenv → Manage environment variables
+
+        - Authentication & Security
+                bcryptjs → Password hashing
+                jsonwebtoken → Token-based authentication
+
+3. Install Testing Dependencies
+        
+        npm install --save-dev jest supertest mongodb-memory-server
+
+                - jest → Unit & integration testing
+                - supertest → API endpoint testing
+                - mongodb-memory-server → In-memory database for tests
+        
+        npm install --save-dev cross-env
+
+                -To use Jest in Windows, install cross-env:
+
+4. Install Performance & Security Testing Tools
+        
+        npm install -g artillery
+        artillery run artillery-config.json
+
+5. Additional Dev Tools
+        npm install --save-dev nodemon
+
+## Install All in one command using: 
+        npm install express mongoose dotenv cors helmet bcryptjs jsonwebtoken express-rate-limit morgan multer uuid jest supertest mongodb-memory-server cross-env --save-dev nodemon
+        npm install -g artillery
+
+        
+6. Set up the environment variables in `.env`:
+
+7. Start the server:
     - npm run dev
 
 ## 🚀 API Endpoints (Windows)
