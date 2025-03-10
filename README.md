@@ -181,20 +181,20 @@ http://localhost:8080/dashboard/RevenueTrends
 
 2. Expense and Income Tracking:
 
-    • CRUD operations for income and expense entries.
-    • Categorize expenses (e.g., Food, Transportation, Entertainment).
-    • Tag Transactions with Custom Labels:
-            o Allow users to assign custom tags to their transactions for better categorization and 
-            filtering.
-            o Examples of tags include #vacation, #work, or #utilities. Tags help users group 
-            transactions and analyze their spending patterns.
-            o Implement functionality to filter and sort transactions by tags for detailed insights.
-    • Add Support for Recurring Transactions:
-            o Enable users to define recurring transactions such as monthly subscriptions, rent, 
-            or salary.
-            o Users should specify recurrence patterns (e.g., daily, weekly, monthly) and end 
-            dates if applicable.
-            o Provide notifications for upcoming or missed recurring transactions
+        • CRUD operations for income and expense entries.
+        • Categorize expenses (e.g., Food, Transportation, Entertainment).
+        • Tag Transactions with Custom Labels:
+                o Allow users to assign custom tags to their transactions for better categorization and 
+                filtering.
+                o Examples of tags include #vacation, #work, or #utilities. Tags help users group 
+                transactions and analyze their spending patterns.
+                o Implement functionality to filter and sort transactions by tags for detailed insights.
+        • Add Support for Recurring Transactions:
+                o Enable users to define recurring transactions such as monthly subscriptions, rent, 
+                or salary.
+                o Users should specify recurrence patterns (e.g., daily, weekly, monthly) and end 
+                dates if applicable.
+                o Provide notifications for upcoming or missed recurring transactions
 
 3. Budget Management:
 
