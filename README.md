@@ -168,6 +168,7 @@ http://localhost:8080/dashboard/RevenueTrends
 ## Functionalities
 
 1.  User Roles and Authentication
+
         Admin:
             ▪ Manage all user accounts.
             ▪ Oversee all transactions and reports.
@@ -179,6 +180,7 @@ http://localhost:8080/dashboard/RevenueTrends
             ▪ View and generate reports for personal finances.
 
 2. Expense and Income Tracking:
+
     • CRUD operations for income and expense entries.
     • Categorize expenses (e.g., Food, Transportation, Entertainment).
     • Tag Transactions with Custom Labels:
@@ -195,27 +197,35 @@ http://localhost:8080/dashboard/RevenueTrends
             o Provide notifications for upcoming or missed recurring transactions
 
 3. Budget Management:
+
         • Allow users to set monthly or category-specific budgets.
         • Notify users when nearing or exceeding budgets.
         • Provide budget adjustment recommendations based on spending trends
 
 4. Financial Reports:
+
         • Generate reports for spending trends over time.
         • Visualize income vs. expenses using charts or summaries.
         • Include filters for specific time periods, categories, or tags
 
 5. Notifications and Alerts:
+
         • Notify users about unusual spending patterns or important deadlines.
         • Send reminders for bill payments or upcoming financial goals.
+
 6. Goals and Savings Tracking:
+
         • Allow users to set financial goals (e.g., saving for a car).
         • Track progress toward goals with visual indicators.
         • Enable automatic allocation of savings from income.
+
 7. Multi-Currency Support:
+
         • Enable users to manage finances in multiple currencies.
         • Provide real-time exchange rate updates for accurate reporting.
 
 8. Role-Based Dashboard:
+
         • Provide a dashboard tailored to the user’s role:
                 o Admin: Overview of all users, total system activity, and financial summaries.
 
