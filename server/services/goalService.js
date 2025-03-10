@@ -51,5 +51,22 @@ const autoAllocateToGoals = async (userId, incomeAmount) => {
     }
 };
 
+// ✅ Fetch goals with progress calculation
+const getUserGoals = async(userId) => {
+        console.log(`Inside getUserGoals method in goal Service`);
+        console.log();
 
-module.exports = { checkUpcomingGoals , autoAllocateToGoals };
+        const goals = await Goal.find({ user: userId });
+
+        console.log(user);
+        console.log(goals);
+        console.log();
+
+        return goals.map(goal => ({
+            ...goal.toObject(),
+            progress: Math.round((goal.savedAmount / goal.targetAmount) * 100) // Ensure progress is updated
+        }));
+    }
+
+
+module.exports = { checkUpcomingGoals , autoAllocateToGoals , getUserGoals};

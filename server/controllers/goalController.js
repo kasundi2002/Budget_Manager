@@ -1,5 +1,6 @@
 const Goal = require("./../models/goalSchema");
 const NotificationService = require("./../services/notificationService.js");
+const goalService = require("../services/goalService");
 
 // Create a goal
 const createGoal = async (req, res) => {
@@ -31,9 +32,15 @@ const createGoal = async (req, res) => {
 
 // Get all goals for the user
 const getUserGoals = async (req, res) => {
+    console.log(`Inside getUserGoals method in goal Controller`);
+    console.log();    
     try {
-        const goals = await Goal.find({ user: req.user._id });
-        res.status(200).json({ data: goals });
+        const goals = await goalService.getUserGoals(req.user.id);
+
+        console.log(goals);
+        console.log();
+
+        res.status(200).json({ success: true, data: goals });
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
@@ -42,12 +49,29 @@ const getUserGoals = async (req, res) => {
 // Update a goal (e.g., saved amount)
 const updateGoal = async (req, res) => {
     try {
+        console.log(`Inside update goal in goal controller`);
+
         const { goalId } = req.params;
+        console.log(`goal id: ${goalId}`);
+
+        const goal = await Goal.findOne({ _id: goalId});
+
+        // 🔥 Calculate new progress percentage
+        if (goal.savedAmount !== undefined) {
+            goal.progress = (goal.savedAmount / goal.targetAmount) * 100;
+        }
+        console.log(`goal saved amount: ${goal.savedAmount}`);
+        console.log(`goal target amount: ${goal.targetAmount}`);
+        console.log(`goal progress: ${goal.progress}`);
+        console.log();
+
         const updatedGoal = await Goal.findByIdAndUpdate(
             goalId,
             req.body,
             { new: true }
         );
+        console.log(`updated goal: ${updatedGoal}`);
+
         if (!updatedGoal) {
             return res.status(404).json({ message: "Goal not found" });
         }
