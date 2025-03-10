@@ -46,6 +46,10 @@ class CurrencyService {
     }
 
     async convertAmount(amount, fromCurrency, toCurrency) {
+        console.log(`Inside convert Amout method in currency Service`);
+        console.log(`Fetched Data: ${amount}`);      
+        console.log();  
+
         if (fromCurrency === toCurrency) return amount; // No conversion needed
 
         const rates = await this.fetchExchangeRates(fromCurrency);

@@ -20,11 +20,20 @@ const checkUpcomingGoals = async () => {
 
 // ✅ Automatically allocate savings from income transactions
 const autoAllocateToGoals = async (userId, incomeAmount) => {
+    console.log(`inside autoAllocateToGoals method in goal Service`);  
+    console.log(`Fetched Data: ${userId} , ${incomeAmount}`); 
+    console.log();   
+    
     try {
         const goals = await Goal.find({ user: userId, autoAllocate: true });
 
         for (let goal of goals) {
             const allocatedAmount = (incomeAmount * goal.allocationPercentage) / 100;
+
+            console.log(`User ID: ${userId}`);  
+            console.log(`Income amount: ${incomeAmount}`); 
+            console.log(`Allocation percentage: ${goal.allocationPercentage}%`); 
+            console.log();   
 
             if (goal.savedAmount + allocatedAmount > goal.targetAmount) {
                 goal.savedAmount = goal.targetAmount;
@@ -32,12 +41,15 @@ const autoAllocateToGoals = async (userId, incomeAmount) => {
                 goal.savedAmount += allocatedAmount;
             }
 
+            console.log(`Goal saved amount: ${goal.savedAmount}`); 
+
             await goal.save();
-            await sendNotification(userId, "goal_update", `Auto-allocated ${allocatedAmount} to goal "${goal.title}".`);
+            await sendNotification(userId, "goal_alert", `Auto-allocated ${allocatedAmount} to goal "${goal.title}".`);
         }
     } catch (error) {
         console.error("Error allocating savings:", error);
     }
 };
+
 
 module.exports = { checkUpcomingGoals , autoAllocateToGoals };

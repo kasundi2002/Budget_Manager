@@ -1,13 +1,23 @@
+const mongoose = require("mongoose");
+
 const Transaction = require("../models/TransactionSchema");
 const Currency = require("../models/currencySchema");
-const CurrencyService = require("./currencyService");
 const Notification = require("../models/notificationSchema");
 const Goal = require("./../models/goalSchema");
+
+const CurrencyService = require("./currencyService");
 const goalService = require("./../services/goalService");
+const BudgetService = require("./../services/budgetService");
+
 
 class TransactionService {
     // ✅ Create a transaction with currency conversion
     async createTransaction(userId, transactionData) {
+
+        console.log(`inside createTransaction method in transaction Service`);  
+        console.log(`Fetched Data: ${userId} , ${transactionData}`); 
+        console.log();   
+
         const userCurrency = await Currency.findOne({ user: userId });
 
         if (!userCurrency) {
@@ -20,6 +30,8 @@ class TransactionService {
             convertedAmount = await CurrencyService.convertAmount(transactionData.amount, transactionData.currency, userCurrency.baseCurrency);
         }
 
+        console.log(`converted amount is ${convertedAmount}`);
+        
         const transaction = await Transaction.create({
             user: userId,
             ...transactionData,
@@ -29,16 +41,31 @@ class TransactionService {
 
         await this.updateAvailableBalance(userId);
         
+        console.log(`type: ${transaction.type}`);
+        console.log(`auto Allocate: ${transaction.autoAllocate}`);
+        console.log();
+
         // ✅ Auto allocate if it's an income
-        if (transaction.type === "income" && transaction.autoAllocate === "true") {
+        if (transaction.type == "income" && transaction.autoAllocate == true) {
+            console.log(`Inside transaction Service: create transaction method`);
+            console.log(`Transaction typr is income and autoAllocate is true`);
+            console.log(`${userId} , ${transaction.amount}`);
+            console.log();
+
             await goalService.autoAllocateToGoals(userId, transaction.amount);
         }
 
-        await Notification.create({
-            user: userId,
-            type: "Transaction",
-            message: `New transaction added: ${convertedAmount} ${userCurrency.baseCurrency}`
-        });
+    if (transactionData.type === "expense") {  // ✅ Use '===' for comparison
+        // ✅ Check budget alerts immediately after transaction
+        await BudgetService.checkBudgetAlerts(userId);
+    }
+
+
+    await Notification.create({
+        user: userId,
+        type: "Transaction",
+        message: `New transaction added: ${convertedAmount} ${userCurrency.baseCurrency}`
+    });
 
         return transaction;
     }
@@ -137,24 +164,50 @@ class TransactionService {
     }
 
     async updateAvailableBalance(userId) {
-    const totalIncome = await Transaction.aggregate([
-        { $match: { user: userId, type: "income" } },
-        { $group: { _id: null, total: { $sum: "$amount" } } }
-    ]);
+        console.log(`inside UpdateAvailableBalance method in transaction Service`);  
+        console.log(`Fetched Data: ${userId}`); 
+        console.log();   
 
-    const totalExpenses = await Transaction.aggregate([
-        { $match: { user: userId, type: "expense" } },
-        { $group: { _id: null, total: { $sum: "$amount" } } }
-    ]);
+        const userTransactions = await Transaction.find({ user: userId });
+        console.log(`User Transactions:`, userTransactions);
 
-    const allocatedAmount = await Goal.aggregate([
-        { $match: { user: userId, autoAllocate: true } },
-        { $group: { _id: null, total: { $sum: "$savedAmount" } } }
-    ]);
+        const userGoals = await Goal.find({ user: userId, autoAllocate: true });
+        console.log(`User Goals:`, userGoals);
 
-    const availableBalance = (totalIncome[0]?.total || 0) - (totalExpenses[0]?.total || 0) - (allocatedAmount[0]?.total || 0);
-    return availableBalance;
+        // ✅ Convert `userId` to ObjectId to match MongoDB format
+        const userObjectId = new mongoose.Types.ObjectId(userId);        
+
+        // ✅ **Fix: Extract the first element from the aggregation result**
+        const totalIncomeResult = await Transaction.aggregate([
+            { $match: { user: userObjectId, type: "income" } },
+            { $group: { _id: null, total: { $sum: "$amount" } } }
+        ]);
+        const totalIncome = totalIncomeResult.length > 0 ? totalIncomeResult[0].total : 0;
+        console.log(`Total income: ${totalIncome}`);  
+        console.log(`Total Income Aggregation Result:`, totalIncomeResult);
+
+        const totalExpensesResult = await Transaction.aggregate([
+            { $match: { user: userObjectId, type: "expense" } },
+            { $group: { _id: null, total: { $sum: "$amount" } } }
+        ]);
+        const totalExpenses = totalExpensesResult.length > 0 ? totalExpensesResult[0].total : 0;
+        console.log(`Total expenses: ${totalExpenses}`);  
+        console.log(`Total Expenses Aggregation Result:`, totalExpensesResult);
+
+        const allocatedAmountResult = await Goal.aggregate([
+            { $match: { user: userObjectId, autoAllocate: true } },
+            { $group: { _id: null, total: { $sum: "$savedAmount" } } }
+        ]);
+        const allocatedAmount = allocatedAmountResult.length > 0 ? allocatedAmountResult[0].total : 0;
+        console.log(`Allocated amount: ${allocatedAmount}`);  
+        console.log(`Allocated Amount Aggregation Result:`, allocatedAmountResult);
+
+        const availableBalance = totalIncome - totalExpenses - allocatedAmount;
+        console.log(`Available balance: ${availableBalance}`);  
+        
+        return availableBalance;
     }
+
 }
 
 module.exports = new TransactionService();
