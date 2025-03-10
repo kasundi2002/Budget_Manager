@@ -1,4 +1,4 @@
-//tested using npx jest tests/transaction.test.js --detectOpenHandles and working
+//tested using npx jest tests/integration/transaction.test.js --detectOpenHandles and working
 
 const request = require("supertest");
 const mongoose = require("mongoose");

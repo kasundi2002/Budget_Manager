@@ -1,5 +1,5 @@
 //Tests Creating, Fetching & Deleting Budgets
-//tested using npx jest tests/budget.test.js --detectOpenHandles and working
+//tested using npx jest tests/integration/budget.test.js --detectOpenHandles and working
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { app } = require("../../server"); 

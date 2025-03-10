@@ -1,4 +1,4 @@
-//tested using npx jest tests/auth.test.js --detectOpenHandles and working
+//tested using npx jest tests/integration/auth.test.js --detectOpenHandles and working
 const request = require("supertest");
 const mongoose = require("mongoose");
 const {app} = require("../../server"); 

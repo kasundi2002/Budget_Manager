@@ -1,5 +1,5 @@
 // goal.test.js
-//tested using npx jest tests/goal.test.js --detectOpenHandles and working
+//tested using npx jest tests/integration/goal.test.js --detectOpenHandles and working
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { app } = require("../../server"); 
