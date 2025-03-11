@@ -1,4 +1,5 @@
 //tested using npx jest tests/integration/auth.test.js --detectOpenHandles and working
+//ok - final
 const request = require("supertest");
 const mongoose = require("mongoose");
 const {app} = require("../../server"); 
@@ -12,7 +13,7 @@ jest.mock('bcrypt', () => ({
 }));
 
 // Mock the User model
-jest.mock('../models/UserSchema', () => ({
+jest.mock('../../models/UserSchema', () => ({
     create: jest.fn(async (userData) => ({
         _id: userData.email === "testadmin@example.com" ? '67890' : '123456',
         name: userData.name,

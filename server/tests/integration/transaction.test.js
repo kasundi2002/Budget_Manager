@@ -1,5 +1,5 @@
 //tested using npx jest tests/integration/transaction.test.js --detectOpenHandles and working
-
+//ok - final
 const request = require("supertest");
 const mongoose = require("mongoose");
 const { app } = require("../../server"); 
@@ -18,7 +18,7 @@ describe("Transaction API Tests", () => {
     let testUserEmail = "test@example.com"; 
     let testAdminEmail = "testadmin@example.com";
 
-    let testCategoryId = "67c011027240b0faa5ad1880"; 
+    let testCategoryId = "665c1f8b2b9d3a0012f3b006"; 
 
     beforeAll(async () => {
         if (mongoose.connection.readyState !== 1) {

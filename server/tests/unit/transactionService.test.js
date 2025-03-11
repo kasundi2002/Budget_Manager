@@ -1,86 +1,57 @@
-//unit test : transaction
-// tests/unit/transactionService.test.js
-
 const mongoose = require('mongoose');
-const Notification = require('../../models/notificationSchema'); 
+const TransactionService = require('../../services/transactionService'); 
 const Transaction = require('../../models/TransactionSchema'); 
-const Currency = require('../../models/currencySchema'); 
-const transactionService = require('../../services/transactionService'); // Import the instance directly
+const Goal = require('../../models/goalSchema'); 
 
-// Mock data
-const userId = new mongoose.Types.ObjectId(); // Generate a valid ObjectId for user
-const transactionId = new mongoose.Types.ObjectId(); // Generate a valid ObjectId for transaction
-const convertedAmount = 100; 
-const userCurrency = { baseCurrency: 'USD' }; 
+jest.mock('../../models/TransactionSchema');
+jest.mock('../../models/goalSchema');
 
-jest.setTimeout(20000);
+describe('updateAvailableBalance', () => {
+    const userId = new mongoose.Types.ObjectId();
 
-// Mock the database connection and the models
-jest.mock('mongoose', () => ({
-  ...jest.requireActual('mongoose'),
-  Types: {
-    ObjectId: jest.fn().mockReturnValue('mockObjectId'),
-  },
-}));
-
-jest.mock('../../models/currencySchema', () => ({
-  findOne: jest.fn(),
-}));
-
-jest.mock('../../models/transactionSchema', () => ({
-  findOne: jest.fn(),
-  create: jest.fn(),
-}));
-
-jest.mock('../../models/notificationSchema', () => ({
-  create: jest.fn(),
-}));
-
-describe('Transaction Service - Unit Tests', () => {
-
-  // Mock Notification.create method
-  jest.spyOn(Notification, 'create').mockResolvedValue({
-    user: userId,
-    type: "Transaction",
-    message: `New transaction added: ${convertedAmount} ${userCurrency.baseCurrency}`,
-  });
-
-  // Mock Currency.findOne to return user currency
-  Currency.findOne.mockResolvedValue(userCurrency);
-
-  // Mock Transaction.findOne to return a mock transaction document with populate
-  const mockTransaction = {
-    _id: transactionId,
-    user: userId,
-    category: new mongoose.Types.ObjectId(),
-    populate: jest.fn().mockResolvedValue({
-      name: "Category",
-      type: "Type",
-    }), // Mock populate method
-  };
-
-  // Make sure that findOne returns a mockTransaction with populate
-  Transaction.findOne.mockResolvedValue(mockTransaction);
-
-  // Mock Transaction.create to return the created transaction
-  Transaction.create.mockResolvedValue({
-    user: userId,
-    amount: convertedAmount,
-    currency: userCurrency.baseCurrency,
-    category: "mockCategory",
-  });
-
-  test('Should create a transaction', async () => {
-    // Creating a transaction using transactionService
-    const result = await transactionService.createTransaction(userId, {
-      amount: convertedAmount,
-      currency: 'USD',
-      categoryId: "67c011307240b0faa5ad1886", // Example categoryId
+    beforeEach(() => {
+        jest.clearAllMocks();
     });
 
-    expect(result).toHaveProperty('user', userId);
-    expect(result).toHaveProperty('amount', convertedAmount);
-    expect(result).toHaveProperty('currency', userCurrency.baseCurrency);
-    expect(result).toHaveProperty('category', "mockCategory");
-  });
+    it('should correctly calculate the available balance', async () => {
+        Transaction.find.mockResolvedValue([ 
+            { user: userId, type: 'income', amount: 500 },
+            { user: userId, type: 'expense', amount: 200 }
+        ]);
+
+        Goal.find.mockResolvedValue([
+            { user: userId, autoAllocate: true, savedAmount: 100 },
+            { user: userId, autoAllocate: true, savedAmount: 50 }
+        ]);
+
+        Transaction.aggregate.mockImplementation((pipeline) => {
+            if (pipeline[0].$match.type === 'income') {
+                return Promise.resolve([{ total: 500 }]);
+            }
+            if (pipeline[0].$match.type === 'expense') {
+                return Promise.resolve([{ total: 200 }]);
+            }
+            return Promise.resolve([]);
+        });
+
+        Goal.aggregate.mockResolvedValue([{ total: 150 }]);
+
+        const balance = await TransactionService.updateAvailableBalance(userId);
+        expect(balance).toBe(150);
+    });
+
+    it('should return 0 if no transactions exist', async () => {
+        Transaction.find.mockResolvedValue([]);
+        Goal.find.mockResolvedValue([]);
+        Transaction.aggregate.mockResolvedValue([]);
+        Goal.aggregate.mockResolvedValue([]);
+
+        const balance = await TransactionService.updateAvailableBalance(userId);
+        expect(balance).toBe(0);
+    });
+
+    it('should handle errors gracefully', async () => {
+        Transaction.aggregate.mockRejectedValue(new Error('Database error'));
+        await expect(TransactionService.updateAvailableBalance(userId)).rejects.toThrow('Database error');
+    });
 });

@@ -1,5 +1,6 @@
 //unit test : goal
 // npx jest tests/unit/goalService.test.js
+//ok final - tesed and working
 const GoalService = require("../../services/goalService");
 const Goal = require("../../models/goalSchema");
 const { sendNotification } = require("../../services/notificationService");
