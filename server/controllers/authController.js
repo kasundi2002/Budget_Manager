@@ -23,7 +23,14 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+
+        // Validate email format
+        if (!email || typeof email !== "string") {
+            return res.status(400).json({ message: "Invalid email format" });
+        }
+
         const user = await User.findOne({ email });
+
         if (!user) return res.status(404).json({ message: "User not found" });
 
         const isMatch = await bcrypt.compare(password, user.password);

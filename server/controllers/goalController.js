@@ -33,18 +33,23 @@ const createGoal = async (req, res) => {
 // Get all goals for the user
 const getUserGoals = async (req, res) => {
     console.log(`Inside getUserGoals method in goal Controller`);
+    console.log(`userId: ${req.user.id}`);  // ✅ Logging corrected
     console.log();    
+
     try {
         const goals = await goalService.getUserGoals(req.user.id);
 
+        console.log(`Goals retrieved successfully`);
         console.log(goals);
         console.log();
 
         res.status(200).json({ success: true, data: goals });
     } catch (error) {
+        console.error("Error fetching goals:", error);
         res.status(500).json({ message: error.message });
     }
 };
+
 
 // Update a goal (e.g., saved amount)
 const updateGoal = async (req, res) => {

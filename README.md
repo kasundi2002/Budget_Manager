@@ -5,8 +5,12 @@
 - 🔐 Secure with JWT authentication
 - 👨‍🏫 Tested with POSTMAN API
 - 👨‍🔧 Unit and Integration testing done with jest
-- 📈 Performance tested with Artillery --> yet to be tested
-- 🕵️ Security testing done using Cross-Site Scripting (XSS)and helmet.js --> yet to be tested
+- 📈 Performance tested with Artillery --> artillery run artillery-config.json
+- 🕵️ Security testing done using Cross-Site Scripting (XSS)and helmet.js --> installed and used helmet and tested by 
+        1. Trying accessing admin routes as a normal user. 
+        2. Trying Invalid JWT tokens
+        3. Trying Expired tokens
+        4. Trying Missing tokens
 
 ## 🛠️ Setup Instructions (Windows)
 1. Clone the repository:

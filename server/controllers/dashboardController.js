@@ -55,16 +55,19 @@ const getUserDashboard = async (req, res) => {
         const transactions = await Transaction.find({ "user":userId }).sort({ date: -1 });
 
         console.log(`transactions : ${transactions}`);
+        console.log();
         // Fetch budget details
         const budget = await Budget.findOne({ "user":userId });
 
         console.log(`budget : ${budget}`);
+        console.log();
 
         // Fetch financial goals
         const goals = await Goal.find({ "user":userId });
 
         console.log(`goals : ${goals}`);
-
+        console.log();
+        
         // Calculate total fee collected from transactions
         const transactionRevenue = await Transaction.aggregate([
             { $group: { _id: null, totalAmount: { $sum: "$amount" } } }
