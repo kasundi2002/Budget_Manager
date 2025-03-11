@@ -1,3 +1,7 @@
+//unit test : currency
+// npx jest tests/unit/currencyService.test.js
+//ok final
+
 const axios = require("axios");
 const Currency = require("../../models/currencySchema");
 const CurrencyService = require("../../services/CurrencyService");

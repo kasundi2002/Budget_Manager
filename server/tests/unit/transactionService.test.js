@@ -1,3 +1,7 @@
+//unit test : transaction
+// npx jest tests/unit/transactionService.test.js
+//ok final
+
 const mongoose = require('mongoose');
 const TransactionService = require('../../services/transactionService'); 
 const Transaction = require('../../models/TransactionSchema'); 

@@ -1,3 +1,7 @@
+//unit test : report
+// npx jest tests/unit/reportService.test.js
+//ok final
+
 const ReportService = require("../../services/reportService");
 const Transaction = require("../../models/TransactionSchema");
 const Report = require("../../models/ReportSchema");
