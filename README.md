@@ -7,6 +7,7 @@
 - 👨‍🔧 Unit and Integration testing done with jest
 - 📈 Performance tested with Artillery --> artillery run artillery-config.json
 - 🕵️ Security testing done using Cross-Site Scripting (XSS)and helmet.js --> installed and used helmet and tested by 
+        
         1. Trying accessing admin routes as a normal user. 
         2. Trying Invalid JWT tokens
         3. Trying Expired tokens
