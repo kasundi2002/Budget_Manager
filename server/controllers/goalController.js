@@ -17,7 +17,7 @@ const createGoal = async (req, res) => {
         });
         await goal.save();
 
-        // ✅ Send a notification when a transaction is created
+        //Send a notification when a transaction is created
         await NotificationService.sendNotification(
             req.user.id,
             "goal_alert",
@@ -33,7 +33,7 @@ const createGoal = async (req, res) => {
 // Get all goals for the user
 const getUserGoals = async (req, res) => {
     console.log(`Inside getUserGoals method in goal Controller`);
-    console.log(`userId: ${req.user.id}`);  // ✅ Logging corrected
+    console.log(`userId: ${req.user.id}`);  //Logging corrected
     console.log();    
 
     try {
@@ -61,7 +61,7 @@ const updateGoal = async (req, res) => {
 
         const goal = await Goal.findOne({ _id: goalId});
 
-        // 🔥 Calculate new progress percentage
+        //Calculate new progress percentage
         if (goal.savedAmount !== undefined) {
             goal.progress = (goal.savedAmount / goal.targetAmount) * 100;
         }
@@ -102,7 +102,7 @@ const deleteGoal = async (req, res) => {
             return res.status(404).json({ message: "Goal not found" });
         }
 
-        // ✅ Send a notification when a transaction is deleted
+        //Send a notification when a transaction is deleted
         await NotificationService.sendNotification(
             req.user.id,
             "goal_alert",

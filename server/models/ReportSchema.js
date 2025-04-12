@@ -5,9 +5,9 @@ const reportSchema = new mongoose.Schema({
     type: { type: String, enum: ["spending_trend", "income_vs_expenses"], required: true },
     startDate: { type: Date, required: true },
     endDate: { type: Date, required: true },
-    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" }, // Optional category filter
-    tags: [{ type: String }], // Optional tag filters
-    data: { type: Object, required: true }, // Stores report data (totals, trends, etc.)
+    category: { type: mongoose.Schema.Types.ObjectId, ref: "Category" }, 
+    tags: [{ type: String }], 
+    data: { type: Object, required: true }, 
     createdAt: { type: Date, default: Date.now }
 });
 

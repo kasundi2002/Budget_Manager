@@ -49,7 +49,7 @@ const connectDB = async () => {
         app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
     } catch (error) {
         console.error("MongoDB Connection Error:", error);
-        process.exit(1); // Stop the server if DB connection fails
+        process.exit(1); 
     }
 };
 
@@ -57,8 +57,8 @@ const connectDB = async () => {
 // Start the server in non-test environments
 let server;
 if (process.env.NODE_ENV !== "test") {
-    server = connectDB(); // Only run this in non-test environments
+    server = connectDB(); 
 }
 
-module.exports = { app, server };; //Export app for Jest testing
+module.exports = { app, server };; 
 

@@ -1,13 +1,13 @@
 const Transaction = require("../models/TransactionSchema");
 const TransactionService = require("../services/transactionService");
 
-// ✅ Create a new transaction
+// Create a new transaction
 const createTransaction = async (req, res) => {
     try {
         const { type, amount, category, tags, date, recurring, currency , autoAllocate } = req.body;
         const userId = req.user.id;
 
-        // ✅ Store transaction using the service
+        // Store transaction using the service
         const transaction = await TransactionService.createTransaction(userId, {
             type,
             category,
@@ -27,7 +27,7 @@ const createTransaction = async (req, res) => {
     }
 };
 
-// ✅ Get transactions with category names
+// Get transactions with category names
 const getUserTransactions = async (req, res) => {
     try {
         const transactions = await TransactionService.getUserTransactions(req.user.id);
@@ -37,7 +37,7 @@ const getUserTransactions = async (req, res) => {
     }
 };
 
-// ✅ Get a single transaction by ID
+//  Get a single transaction by ID
 const getSingleTransaction = async (req, res) => {
     try {
         const transaction = await TransactionService.getSingleTransaction(req.params.id, req.user.id);
@@ -49,7 +49,7 @@ const getSingleTransaction = async (req, res) => {
     }
 };
 
-// ✅ Update a transaction
+//  Update a transaction
 const updateTransaction = async (req, res) => {
     try {
         const updatedTransaction = await TransactionService.updateTransaction(req.params.id, req.user.id, req.body);
@@ -61,7 +61,7 @@ const updateTransaction = async (req, res) => {
     }
 };
 
-// ✅ Delete a transaction
+//  Delete a transaction
 const deleteTransaction = async (req, res) => {
     try {
         const transaction = await TransactionService.deleteTransaction(req.params.id, req.user.id);
@@ -73,7 +73,7 @@ const deleteTransaction = async (req, res) => {
     }
 };
 
-// ✅ Admin: Get all transactions from all users
+// Admin: Get all transactions from all users
 const getAllTransactionsAndBudgets = async (req, res) => {
     try {
         const transactions = await TransactionService.getAllTransactions();

@@ -4,7 +4,7 @@
 
 const axios = require("axios");
 const Currency = require("../../models/currencySchema");
-const CurrencyService = require("../../services/CurrencyService");
+const CurrencyService = require("../../services/currencyService");
 
 jest.mock("axios");
 jest.mock("../../models/currencySchema");

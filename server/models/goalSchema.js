@@ -7,8 +7,8 @@ const goalSchema = new mongoose.Schema({
     savedAmount: { type: Number, default: 0 },
     currency: { type: String, required: true, default: "USD" }, 
     deadline: { type: Date, required: true },
-    autoAllocate: { type: Boolean, default: false }, // Enables or disables auto allocation
-    allocationPercentage: { type: Number, min: 1, max: 100, default: 10 }, // Percentage of income allocated
+    autoAllocate: { type: Boolean, default: false }, 
+    allocationPercentage: { type: Number, min: 1, max: 100, default: 10 }, 
     progress: { type: Number, default: 0 }
 });
 

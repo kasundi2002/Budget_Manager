@@ -1,6 +1,6 @@
 const Category = require("./../models/categorySchema");
 
-// ✅ Admin: Create a new category
+//Admin: Create a new category
 const createCategory = async (req, res) => {
     try {
         const { name, type } = req.body;
@@ -14,7 +14,7 @@ const createCategory = async (req, res) => {
     }
 };
 
-// ✅ Get all categories (Users can view)
+//Get all categories (Users can view)
 const getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find();
@@ -24,7 +24,7 @@ const getAllCategories = async (req, res) => {
     }
 };
 
-// ✅ Admin: Update a category
+//Admin: Update a category
 const updateCategory = async (req, res) => {
     try {
         const updatedCategory = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -35,7 +35,7 @@ const updateCategory = async (req, res) => {
     }
 };
 
-// ✅ Admin: Delete a category
+//Admin: Delete a category
 const deleteCategory = async (req, res) => {
     try {
         const category = await Category.findByIdAndDelete(req.params.id);

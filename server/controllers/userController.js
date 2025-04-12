@@ -1,7 +1,7 @@
 const User = require("./../models/UserSchema");
 const bcrypt = require("bcrypt");
 
-// ✅ Get all users (Admin only)
+// Get all users (Admin only)
 const getAllUsers = async (req, res) => {
     try {
         const users = await User.find().select("-password");
@@ -11,7 +11,7 @@ const getAllUsers = async (req, res) => {
     }
 };
 
-// ✅ Get a single user by ID
+// Get a single user by ID
 const getSingleUser = async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select("-password");
@@ -23,7 +23,7 @@ const getSingleUser = async (req, res) => {
     }
 };
 
-// ✅ Update user profile (Only user themselves or Admin)
+// Update user profile (Only user themselves or Admin)
 const updateUser = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -44,7 +44,7 @@ const updateUser = async (req, res) => {
     }
 };
 
-// ✅ Delete a user (Only Admin)
+// Delete a user (Only Admin)
 const deleteUser = async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id);
